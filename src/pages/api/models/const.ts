@@ -5,7 +5,7 @@ export const names = {
 }
 
 export const entrenamiento = {
-    id: "entrenamiento_id",
+    id: "training_id",
     fecha: "fecha",
     duracion: "duracion",
     calorias: "calorias"

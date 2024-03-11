@@ -1,26 +1,20 @@
 import { neon } from "@neondatabase/serverless";
-import { names } from "./models/const";
+import { entrenamiento, names } from "./models/const";
 import type { APIRoute } from "astro";
+import { badRequest, okRequest } from "./models/answers";
 
 const sql = neon(import.meta.env.DATABASE_URL);
 
-const goodAnwser = {
-  status: 200,
-  headers: {
-    "Content-Type": "application/json"
-  }
-}
 
 export async function GET() {
   const response = await sql(`SELECT * FROM ${names.ENTRENAMIENTO}`);
   console.log(response)
   return new Response(
-    JSON.stringify({
-      data: response
-    }), okRequest
+    JSON.stringify({ data: response, response: "OK" }), okRequest
   );
 };
 interface Training {
+  id: string;
   fecha: string;
   training_time: string;
   calorias: string;
@@ -34,11 +28,16 @@ export const POST: APIRoute = async ({ request }) => {
     training.fecha = body.get("fecha") as string;
     training.training_time = body.get("training_time") as string;
     training.calorias = body.get("calorias") as string;
-    const response = await sql(`INSERT INTO "entrenamiento"("fecha","training_time","calorias") VALUES('${training.fecha}','${training.training_time}','${training.calorias}');`);
-    return new Response(
-      JSON.stringify({ data: response }),
-      goodAnwser
-    );
+
+    /* Verificar que los datos llegaron correctamente */
+    if (training.id === null || training.calorias === null || training.fecha === null)
+      return new Response(JSON.stringify({ error: 'Faltan datos o los datos estan mal formateados' }), badRequest);
+
+    /* Actualizacion de datos */
+    const response = await sql(`INSERT INTO "entrenamiento"("${training.fecha}","${training.training_time}","${training.calorias}") VALUES('${training.fecha}','${training.training_time}','${training.calorias}');`);
+
+    /* Respuesta */
+    return new Response(JSON.stringify({ data: response, response: "OK" }), okRequest);
   } catch (error) {
     console.error('Error parsing request body:', error);
     return new Response(
@@ -46,3 +45,31 @@ export const POST: APIRoute = async ({ request }) => {
     );
   }
 };
+
+export const PUT: APIRoute = async ({ request }) => {
+  let training = {} as Training;
+  let body
+  try {
+    /* Obtencion de datos */
+    body = (await request.formData())
+    let id = body.get("id") as string;
+    training.fecha = body.get("fecha") as string;
+    training.training_time = body.get("training_time") as string;
+    training.calorias = body.get("calorias") as string;
+
+    /* Verificar que los datos llegaron correctamente */
+    if (training.id === null || training.training_time === null || training.calorias === null || training.fecha === null)
+      return new Response(JSON.stringify({ error: 'Faltan datos o los datos estan mal formateados' }), badRequest);
+
+    /* Actualizacion de datos */
+    const response = await sql(`UPDATE "${names.ENTRENAMIENTO}" SET "fecha"='${training.fecha}' "training_time"='${training.training_time}', "calorias"='${training.calorias}' WHERE "${entrenamiento.id}"='${id}';`);
+
+    /* Respuesta */
+    return new Response(JSON.stringify({ data: response, response: "OK" }), okRequest);
+  } catch (error) {
+    console.error('Error parsing request body:', error);
+    return new Response(
+      JSON.stringify({ error: 'Invalid or empty request body' }), badRequest
+    );
+  }
+}

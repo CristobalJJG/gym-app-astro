@@ -1,11 +1,11 @@
-const okRequest = {
+export const okRequest = {
     status: 200,
     headers: {
         "Content-Type": "application/json"
     }
 }
 
-const badRequest = {
+export const badRequest = {
     status: 400,
     headers: {
         "Content-Type": "application/json"
