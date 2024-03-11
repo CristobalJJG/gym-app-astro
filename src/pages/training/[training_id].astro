@@ -1,0 +1,37 @@
+---
+import Layout from "../../layouts/Layout.astro";
+import axios from "axios";
+
+interface Props {
+  id: string;
+  fecha: string;
+  calorias: string;
+  training_time: string;
+}
+
+const { training_id } = Astro.params;
+let exercises = await axios
+  .post(Astro.url.origin + "/api/trainings.json", { id: training_id })
+  .then((res) => {
+    return res.data.data;
+  })
+  .catch((err) => {
+    console.log(err);
+  });
+console.log(exercises);
+---
+
+<Layout title="Entrenamientos">
+  <h1 class="text-teal-600">Serie</h1>
+  <!--   {
+    exercises.map((exercise: Props) => (
+      <div class="bg-gray-100 p-4 my-4">
+        <h2 class="text-teal-600">Fecha: {exercise.fecha}</h2>
+        <p>Calorias: {exercise.calorias}</p>
+        <p>Tiempo de entrenamiento: {exercise.training_time}</p>
+      </div>
+    ))
+  } -->
+</Layout>
+
+<style></style>

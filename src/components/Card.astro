@@ -9,14 +9,15 @@ interface Props {
 const { id, fecha, calorias, training_time } = Astro.props;
 ---
 
-<div class="notification">
+<a class="notification" href=`/training/${id}`>
   <div class="notiglow"></div>
   <div class="notititle">{fecha} - {calorias} Kcal</div>
   <div class="notibody">{training_time}</div>
-</div>
+</a>
 
 <style>
   .notification {
+    cursor: pointer;
     display: flex;
     flex-direction: column;
     position: relative;
@@ -43,7 +44,6 @@ const { id, fecha, calorias, training_time } = Astro.props;
     }
 
     &:hover {
-      &:after,
       .notititle {
         transform: translateX(0.25rem);
       }

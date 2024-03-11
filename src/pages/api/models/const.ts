@@ -13,7 +13,7 @@ export const entrenamiento = {
 
 export const ejercicio = {
     id: "ejercicio_id",
-    entrenamineto_id: "entrenamiento_id",
+    entrenamineto_id: "training_id",
     nombre: "nombre",
 }
 
