@@ -16,41 +16,34 @@ const { title } = Astro.props;
     <meta name="generator" content={Astro.generator} />
     <title>{title}</title>
   </head>
-  <body>
+  <body class="relative">
     <slot />
   </body>
 </html>
 <style is:global>
   :root {
-    --accent: 136, 58, 234;
-    --accent-light: 224, 204, 250;
-    --accent-dark: 49, 10, 101;
-    --accent-gradient: linear-gradient(
-      45deg,
-      rgb(var(--accent)),
-      rgb(var(--accent-light)) 30%,
-      white 60%
-    );
+    /* Colores de cartas */
+    --color: #32a6ff;
+    --gradient: linear-gradient(to bottom, #2eadff, #3d83ff, #7e61ff);
+
+    /* Colores generales de astro */
+    --accent: var(--color);
+
+    /* Personalizados */
+    --white: whitesmoke;
+    --dark: #13151a;
+    --black: #18181b;
+    --gray: #2d2d2d;
+    --light: #f5f5f5;
   }
   html {
     font-family: system-ui, sans-serif;
-    background: #13151a;
+    background: var(--dark);
   }
 
   * {
     margin: 0;
     padding: 0;
     color: whitesmoke;
-  }
-  code {
-    font-family:
-      Menlo,
-      Monaco,
-      Lucida Console,
-      Liberation Mono,
-      DejaVu Sans Mono,
-      Bitstream Vera Sans Mono,
-      Courier New,
-      monospace;
   }
 </style>

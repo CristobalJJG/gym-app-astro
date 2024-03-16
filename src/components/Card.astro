@@ -16,6 +16,7 @@ const { id, fecha, calorias, training_time } = Astro.props;
 </a>
 
 <style>
+  /* El cuerpo de la carta */
   .notification {
     cursor: pointer;
     display: flex;
@@ -24,14 +25,14 @@ const { id, fecha, calorias, training_time } = Astro.props;
     --br: 10px;
     width: 18rem;
     height: 5rem;
-    background: #18181b;
-    border-radius: var(--br);
     overflow: hidden;
+    background: rgba(#18181b, 0.9);
+    border-radius: var(--br);
     font-family: sans-serif;
     font-size: 16px;
-    border: 1px solid #29292c;
-    --gradient: linear-gradient(to bottom, #2eadff, #3d83ff, #7e61ff);
-    --color: #32a6ff;
+    border: 1px solid var(--gray);
+
+    /* Barra de color con gradiente */
     &:after {
       position: absolute;
       content: "";
@@ -57,6 +58,7 @@ const { id, fecha, calorias, training_time } = Astro.props;
     }
   }
 
+  /* Titulo */
   .notititle {
     color: var(--color);
     padding: 0.5rem 1.75rem;
@@ -66,12 +68,14 @@ const { id, fecha, calorias, training_time } = Astro.props;
     z-index: 5;
   }
 
+  /* Cuerpo */
   .notibody {
-    color: #fafafa;
     padding: 0 1.75rem;
     transition: transform 0.4s ease-in-out;
     z-index: 5;
   }
+
+  /* Brillo al hacer hover */
   .notiglow {
     position: absolute;
     width: 20rem;
@@ -79,11 +83,11 @@ const { id, fecha, calorias, training_time } = Astro.props;
     transform: translate(-50%, -50%);
     background: radial-gradient(
       circle closest-side at center,
-      white,
+      whitesmoke,
       transparent
     );
     opacity: 0;
     transition: opacity 0.4s ease-in-out;
-    z-index: 3;
+    z-index: 1;
   }
 </style>
