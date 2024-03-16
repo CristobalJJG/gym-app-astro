@@ -1,24 +1,17 @@
-import { neon } from "@neondatabase/serverless";
-import { ejercicio, entrenamiento, names } from "./models/const";
+import { ejercicio, entrenamiento, tableNames, sql } from "./models/const";
+import type { Training } from "./models/interfaces";
 import type { APIRoute } from "astro";
 import { badRequest, okRequest } from "./models/answers";
 
-const sql = neon(import.meta.env.DATABASE_URL);
-
 
 export async function GET() {
-  const response = await sql(`SELECT * FROM ${names.ENTRENAMIENTO}`);
+  const response = await sql(`SELECT * FROM ${tableNames.ENTRENAMIENTO}`);
   console.log(response)
   return new Response(
     JSON.stringify({ data: response, response: "OK" }), okRequest
   );
 };
-interface Training {
-  id: string;
-  fecha: string;
-  training_time: string;
-  calorias: string;
-}
+
 
 export const POST: APIRoute = async ({ request }) => {
   let training = {} as Training;
@@ -33,7 +26,7 @@ export const POST: APIRoute = async ({ request }) => {
       return new Response(JSON.stringify({ error: 'Faltan datos o los datos estan mal formateados' }), badRequest);
 
     /* Insercion de datos */
-    const response = await sql(`SELECT * FROM ${names.EJERCICIO} WHERE "${ejercicio.entrenamineto_id}"='${training.id}';`);
+    const response = await sql(`SELECT * FROM ${tableNames.EJERCICIO} WHERE "${ejercicio.entrenamineto_id}"='${training.id}';`);
 
     /* Respuesta */
     return new Response(JSON.stringify({ data: response, response: "OK" }), okRequest);
@@ -87,7 +80,7 @@ export const PATCH: APIRoute = async ({ request }) => {
       return new Response(JSON.stringify({ error: 'Faltan datos o los datos estan mal formateados' }), badRequest);
 
     /* Actualizacion de datos */
-    const response = await sql(`UPDATE "${names.ENTRENAMIENTO}" SET "fecha"='${training.fecha}' "training_time"='${training.training_time}', "calorias"='${training.calorias}' WHERE "${entrenamiento.id}"='${id}';`);
+    const response = await sql(`UPDATE "${tableNames.ENTRENAMIENTO}" SET "fecha"='${training.fecha}' "training_time"='${training.training_time}', "calorias"='${training.calorias}' WHERE "${entrenamiento.id}"='${id}';`);
 
     /* Respuesta */
     return new Response(JSON.stringify({ data: response, response: "OK" }), okRequest);

@@ -1,4 +1,7 @@
-export const names = {
+import { neon } from "@neondatabase/serverless";
+
+/* Formateo de la BBDD */
+export const tableNames = {
     ENTRENAMIENTO: 'entrenamiento',
     EJERCICIO: 'entrenamiento',
     SERIE: 'entrenamiento',
@@ -23,3 +26,6 @@ export const serie = {
     peso: "peso",
     repeticiones: "repeticiones",
 }
+
+/* Variable general para acceder a la BBDD */
+export const sql = neon(import.meta.env.DATABASE_URL);
