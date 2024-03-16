@@ -1,8 +1,9 @@
 ---
-
+const { href } = Astro.props;
 ---
 
-<button
+<a
+  href=`${href}`
   class="group scale-125 cursor-pointer outline-none hover:rotate-90 duration-300 fixed bottom-10 right-10"
   title="Add New"
 >
@@ -20,4 +21,4 @@
     <path stroke-width="1.5" d="M8 12H16"></path>
     <path stroke-width="1.5" d="M12 16V8"></path>
   </svg>
-</button>
+</a>

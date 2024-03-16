@@ -16,7 +16,7 @@ const { title } = Astro.props;
     <meta name="generator" content={Astro.generator} />
     <title>{title}</title>
   </head>
-  <body class="relative">
+  <body class="relative h-[100vh]">
     <slot />
   </body>
 </html>
@@ -24,6 +24,9 @@ const { title } = Astro.props;
   :root {
     /* Colores de cartas */
     --color: #32a6ff;
+    --gr1: #2eadff;
+    --gr2: #3d83ff;
+    --gr3: #7e61ff;
     --gradient: linear-gradient(to bottom, #2eadff, #3d83ff, #7e61ff);
 
     /* Colores generales de astro */
@@ -34,7 +37,13 @@ const { title } = Astro.props;
     --dark: #13151a;
     --black: #18181b;
     --gray: #2d2d2d;
+    --light-gray: #838383;
     --light: #f5f5f5;
+
+    /* Tamaños */
+    --tiny-letter: 1rem;
+    --small-letter: 1.1rem;
+    --title-letter: 1.2rem;
   }
   html {
     font-family: system-ui, sans-serif;
