@@ -1,9 +1,11 @@
 ---
 import Layout from "../layouts/Layout.astro";
 import Card from "../components/Card.astro";
+import AddButton from "../components/AddButton.astro";
 import axios from "axios";
 
-let trainings = await axios(Astro.url.origin + "/api/trainings.json")
+let trainings = await axios
+  .get(Astro.url.origin + "/api/trainings.json")
   .then((res) => {
     return res.data.data;
   })
@@ -14,9 +16,9 @@ console.log(trainings);
 ---
 
 <Layout title="Entrenamientos">
-  <h1 class="text-teal-600">Entrenamientos</h1>
+  <h1 class="text-teal-600 relative">Entrenamientos</h1>
   <div
-    class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 place-items-center"
+    class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 place-items-center relative"
   >
     {
       trainings.map((training: any) => (
@@ -28,7 +30,9 @@ console.log(trainings);
         />
       ))
     }
-  </div>
 
+    <!-- Boton de add entrenamiento -->
+    <AddButton />
+  </div>
   <style></style>
 </Layout>
