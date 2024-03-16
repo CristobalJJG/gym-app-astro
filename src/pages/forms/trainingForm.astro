@@ -1,0 +1,157 @@
+---
+import Layout from "../../layouts/Layout.astro";
+
+async function insertNewTraining() {
+  try {
+    await fetch(Astro.url.origin + "/api/trainings.json", {
+      method: "PUT",
+      headers: {
+        "Content-Type": "form-data",
+      },
+      body: JSON.stringify({
+        fecha: today,
+        training_time: ttime.split(" "),
+        calorias: kcal,
+      }),
+    });
+  } catch (error) {
+    if (error instanceof Error) {
+      console.error(error.message);
+    }
+  }
+}
+
+let today = new Date().toISOString().split("T")[0];
+let ttime = " ";
+let kcal = 0;
+---
+
+<Layout title="Entrenamientos" transition:persist>
+  <div class="grid place-items-center h-full">
+    <div class="form-container">
+      <h1 class="text-2xl text-center mb-4">Nuevo Entrenamiento</h1>
+      <form class="form">
+        <div class="form-group">
+          <label for="date">Fecha:</label>
+          <input
+            type="date"
+            id="date"
+            value=`${today}`
+            disabled
+            required
+            name="date"
+          />
+        </div>
+        <div class="form-group">
+          <label for="ttime">Horas entrenadas:</label>
+          <input
+            type="text"
+            id="ttime"
+            pattern="[A-Za-z0-9,.-]+"
+            value=`${ttime}`
+            name="ttime"
+          />
+        </div>
+        <div class="form-group">
+          <label for="kcal">Calorias:</label>
+          <input type="number" id="kcal" name="kcal" value=`${kcal}` />
+        </div>
+        <button class="form-submit-btn" onclick=`${insertNewTraining()}`
+          >Submit</button
+        >
+      </form>
+    </div>
+  </div>
+</Layout>
+
+<style lang="scss">
+  .form-container {
+    width: 90%;
+    background:
+      linear-gradient(var(--dark), var(--dark)) padding-box,
+      linear-gradient(
+          145deg,
+          transparent 35%,
+          var(--gr1),
+          var(--gr2),
+          var(--gr3)
+        )
+        border-box;
+    border: 2px solid transparent;
+    padding: 32px 24px;
+    font-family: inherit;
+    color: white;
+    gap: 20px;
+    box-sizing: border-box;
+    border-radius: 16px;
+    background-size: 200% 100%;
+    animation: gradient 5s ease infinite;
+
+    .form {
+      display: flex;
+      flex-direction: column;
+      gap: 20px;
+    }
+
+    .form-group {
+      display: flex;
+      flex-direction: column;
+      gap: 2px;
+    }
+  }
+
+  @keyframes gradient {
+    0% {
+      background-position: 0% 50%;
+    }
+    50% {
+      background-position: 100% 50%;
+    }
+    100% {
+      background-position: 0% 50%;
+    }
+  }
+
+  label {
+    display: block;
+    margin-bottom: 5px;
+    color: var(--light-gray);
+    font-weight: 500;
+    font-size: var(--small-letter);
+  }
+
+  input {
+    width: 100%;
+    padding: 12px 16px;
+    border-radius: 6px;
+    color: var(--white);
+    font-family: inherit;
+    background-color: transparent;
+    border: 1px solid var(--light-gray);
+
+    &::placeholder {
+      opacity: 0.5;
+    }
+
+    &:focus {
+      outline: none;
+      border-color: var(--gr3);
+    }
+  }
+
+  .form-submit-btn {
+    color: var(--light-gray);
+    font-weight: 600;
+    margin: 8px 0 0 30%;
+    width: 40%;
+    background: var(--black);
+    border: 1px solid var(--gray);
+    padding: 12px 16px;
+    border-radius: 6px;
+
+    &:hover {
+      background-color: var(--white);
+      border-color: var(--white);
+    }
+  }
+</style>

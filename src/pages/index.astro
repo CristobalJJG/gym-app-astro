@@ -12,10 +12,9 @@ let trainings = await axios
   .catch((err) => {
     console.log(err);
   });
-console.log(trainings);
 ---
 
-<Layout title="Entrenamientos">
+<Layout title="Entrenamientos" transition:persist>
   <h1 class="text-teal-600 relative">Entrenamientos</h1>
   <div
     class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 place-items-center relative"
@@ -30,9 +29,7 @@ console.log(trainings);
         />
       ))
     }
-
     <!-- Boton de add entrenamiento -->
-    <AddButton />
+    <AddButton href=`/forms/trainingForm` />
   </div>
-  <style></style>
 </Layout>
