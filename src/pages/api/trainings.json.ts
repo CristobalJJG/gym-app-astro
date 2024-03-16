@@ -38,21 +38,23 @@ export const POST: APIRoute = async ({ request }) => {
   }
 };
 
+/* Nuevo entrenamiento */
 export const PUT: APIRoute = async ({ request }) => {
   let training = {} as Training;
   let body
   try {
-    body = (await request.formData())
-    training.fecha = body.get("fecha") as string;
-    training.training_time = body.get("training_time") as string;
-    training.calorias = body.get("calorias") as string;
+    /* Obtencion de datos */
+    body = await request.json()
+    training.fecha = body.fecha;
+    training.training_time = body.training_time;
+    training.calorias = body.calorias;
 
     /* Verificar que los datos llegaron correctamente */
-    if (training.id === null || training.calorias === null || training.fecha === null)
-      return new Response(JSON.stringify({ error: 'Faltan datos o los datos estan mal formateados' }), badRequest);
+    if (training.fecha === null)
+      return new Response(JSON.stringify({ error: 'Falta la fecha o los datos estan mal formateados' }), badRequest);
 
     /* Actualizacion de datos */
-    const response = await sql(`INSERT INTO "entrenamiento"("${training.fecha}","${training.training_time}","${training.calorias}") VALUES('${training.fecha}','${training.training_time}','${training.calorias}');`);
+    const response = await sql(`INSERT INTO "${tableNames.ENTRENAMIENTO}"("${entrenamiento.fecha}","${entrenamiento.duracion}","${entrenamiento.calorias}") VALUES('${training.fecha}','${training.training_time}','${training.calorias}');`);
 
     /* Respuesta */
     return new Response(JSON.stringify({ data: response, response: "OK" }), okRequest);
@@ -64,6 +66,7 @@ export const PUT: APIRoute = async ({ request }) => {
   }
 };
 
+/* Modificar entrenamiento */
 export const PATCH: APIRoute = async ({ request }) => {
   let training = {} as Training;
   let body

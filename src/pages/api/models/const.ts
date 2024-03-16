@@ -10,7 +10,7 @@ export const tableNames = {
 export const entrenamiento = {
     id: "training_id",
     fecha: "fecha",
-    duracion: "duracion",
+    duracion: "training_time",
     calorias: "calorias"
 }
 
