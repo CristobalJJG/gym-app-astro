@@ -21,6 +21,7 @@
     "typescript": "^5.4.2"
   },
   "devDependencies": {
-    "postcss-nesting": "^12.1.0"
+    "postcss-nesting": "^12.1.0",
+    "sass": "^1.72.0"
   }
 }
